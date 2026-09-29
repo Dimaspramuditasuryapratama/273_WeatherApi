@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geolocation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+    <div class="box">
+        <h1>Peta Petualang</h1>
+
+        <h3>Nama : Dimas Pramudita Surya Pratama</h3>
+        <h3>NIM : 20240140273</h3>
+
+        <input id="lokasi" placeholder="Masukkan lokasi" value="Yogyakarta">
+        <button onclick="cari()">Mulai Cari</button>
+
+        <div class="hasil">
+            <p>Lokasi : <span id="hLokasi"></span></p>
+            <p>Negara : <span id="hNegara"></span></p>
+            <p>Provinsi : <span id="hProvinsi"></span></p>
+            <p>Kecamatan : <span id="hKecamatan"></span></p>
+            <p>Longitude : <span id="hLon"></span></p>
+            <p>Latitude : <span id="hLat"></span></p>
+        </div>
+    </div>
+
+    <script>
+        function cari() {
+            const q = document.getElementById("lokasi").value;
+
+            fetch("/api/lokasi?q=" + encodeURIComponent(q))
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById("hLokasi").innerText = data.lokasi;
+                    document.getElementById("hNegara").innerText = data.negara;
+                    document.getElementById("hProvinsi").innerText = data.provinsi;
+                    document.getElementById("hKecamatan").innerText = data.kecamatan;
+                    document.getElementById("hLon").innerText = data.longitude;
+                    document.getElementById("hLat").innerText = data.latitude;
+                })
+                .catch(() => alert("Lokasi tidak ditemukan"));
+        }
+    </script>
+</body>
+</html>
